@@ -4,7 +4,7 @@ Get custom information about a location object or path.
 
 Something like this:
 
-```
+```javascript
 import createRouter from 'location-info'
 
 const valid = {
