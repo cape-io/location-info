@@ -4,6 +4,8 @@
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {
+    "compile": "babel src --out-dir lib",
+    "prepublish": "npm run compile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,5 +27,20 @@
     "lodash": "^4.2.1",
     "query-string": "^3.0.0",
     "url-pattern": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel": "^6.3.13",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.3.21",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "4.x",
+    "eslint-config-import": "^0.9.1",
+    "eslint-loader": "^1.1.1",
+    "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-import": "^0.12.1"
   }
 }
