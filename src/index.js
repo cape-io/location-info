@@ -143,7 +143,7 @@ export default function createRouter() {
       info.params = route.params
       // Allow route getState function to set specific state object.
       if (isFunction(route.getState)) {
-        info.state = info.route.getState(info)
+        info.state = route.getState(info)
       }
       // What the url should be.
       // Opportunity to set a redirect or correct the location of a pushState.
