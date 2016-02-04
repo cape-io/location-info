@@ -1,10 +1,9 @@
 {
   "extends": [
-    "airbnb",
+    "airbnb/base",
     "import/warnings"
   ],
   "ecmaFeatures": {
-    "jsx": true,
     "modules": true
   },
   "env": {
@@ -24,9 +23,6 @@
     }],
     "import/no-named-as-default": 2,
     "import/default": 0,
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2,
     "no-console": 1,
     "no-alert": 1,
     "no-trailing-spaces": 2,
@@ -34,7 +30,7 @@
     "semi": [ 2, "never" ]
   },
   "plugins": [
-    "react", "import"
+    "import"
   ],
   "settings": {
     "import/parser": "babel-eslint",
