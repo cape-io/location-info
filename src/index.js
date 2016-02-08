@@ -35,6 +35,12 @@ export default function createRouter() {
     return routeIndex[id]
   }
 
+  function deleteRoute(id) {
+    const { index } = getRoute(id)
+    delete routeIndex[id]
+    routes.splice(index, 1)
+  }
+
   // @TODO add a way to remove route?
 
   // Helper function to make and set new routes.
@@ -46,7 +52,7 @@ export default function createRouter() {
   //   `validate` should return true or false.
   //   `getState` should return an object.
   //   `getLocation` should return an absolute path.
-  function makeRoute(id, path, props = {}) {
+  function addRoute(id, path, props = {}) {
     // path is not required. Default to use the id.
     const _path = path || `/${id}/`
     // Make our object that represents a route.
@@ -54,6 +60,7 @@ export default function createRouter() {
       // Apply any of the props.
       ...props,
       id,
+      index: routes.length,
       // Create new UrlPattern object.
       pattern: new Pattern(_path),
     }
@@ -65,9 +72,9 @@ export default function createRouter() {
 
   // When you need an event simpler way to create routes.
   // Key of object is the route id. Value is the route path template string.
-  function makeRoutes(routeObject) {
+  function addRoutes(routeObject) {
     each(routeObject, (path, id) => {
-      makeRoute(id, path)
+      addRoute(id, path)
     })
   }
 
@@ -118,11 +125,15 @@ export default function createRouter() {
   }
 
   return {
+    addRoute,
+    addRoutes,
+    deleteRoute,
     getRoutes,
     getRoute,
+    size: () => routes.length,
     locationInfo: partial(locationInfo, pathInfo),
-    makeRoute,
-    makeRoutes,
+    makeRoute: addRoute,
+    makeRoutes: addRoutes,
     pathInfo,
   }
 }

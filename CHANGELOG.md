@@ -1,3 +1,11 @@
+## [2.1.0]
+> 2016-02-08
+
+* Added `index` property to route. Clearly states route match priority.
+* Transition away from `makeRoute` to `addRoute`. Aliased for now.
+* Added `deleteRoute(id)` method.
+* Added `size()` method.
+
 ## [2.0.0]
 > 2016-02-07
 

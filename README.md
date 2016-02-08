@@ -1,6 +1,6 @@
 # location-info
 
-Get custom information about a location object or path.
+Get custom information about a location object or path. The library forces a unique key/id for each route because the author prefers objects over arrays.
 
 Something like this:
 
@@ -13,6 +13,7 @@ const routes = {
 }
 router.makeRoutes(routes)
 ```
+Note that it's not possible to enforce match order when routes created via object. Using lodash/each internally.
 
 or this:
 
@@ -42,7 +43,7 @@ function isAnonymous() {
   return true
 }
 
-function loginOnAnonymouse({ search, pathname, ...info }, route) {
+function loginOnAnonymous({ search, pathname, ...info }, route) {
   if (isAnonymous()) {
     return {
       ...info,
@@ -53,7 +54,7 @@ function loginOnAnonymouse({ search, pathname, ...info }, route) {
 const router = createRouter()
 
 router.makeRoute('login', '/user/login', { validate: isAnonymous })
-router.makeRoute('profile', '/user/profile', { redirect: loginOnAnonymouse })
+router.makeRoute('profile', '/user/profile', { redirect: loginOnAnonymous })
 router.makeRoute('default', '/(:primarySubject/)(:subject/)(:entityId/)', { validate })
 const info = router.locationInfo(window.location)
 console.log(info)
