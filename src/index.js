@@ -1,21 +1,15 @@
 import Pattern from 'url-pattern'
-import { parse } from 'query-string'
-// import clone from 'lodash/clone'
+import each from 'lodash/each'
 import find from 'lodash/find'
 import isFunction from 'lodash/isFunction'
-import pick from 'lodash/pick'
+import partial from 'lodash/partial'
+
+import locationInfo from './locationInfo'
+
+export { stripHash } from './utils'
 
 // location-info
 // Get custom information about a location object or path.
-
-// We are removing the actual hash.
-export function getHash(hash) {
-  if (hash[0] === '#') {
-    return hash.slice(1)
-  }
-  return hash
-}
-
 export default function createRouter() {
   // Route database.
   const routeIndex = {}
@@ -23,6 +17,9 @@ export default function createRouter() {
   const routes = []
   // Adds route to index and array.
   function setRoute(route) {
+    if (routeIndex[route.id]) {
+      throw new Error(`Already have a route with that id (${route.id}).`)
+    }
     routeIndex[route.id] = route
     routes.push(route.id)
   }
@@ -64,6 +61,14 @@ export default function createRouter() {
     setRoute(route)
     // Return what we created.
     return route
+  }
+
+  // When you need an event simpler way to create routes.
+  // Key of object is the route id. Value is the route path template string.
+  function makeRoutes(routeObject) {
+    each(routeObject, (path, id) => {
+      makeRoute(id, path)
+    })
   }
 
   // Check path against specific route. If it's a match grab all info about the route.
@@ -112,50 +117,12 @@ export default function createRouter() {
     return id ? route : null
   }
 
-  // Makes a new object based on browser document.location or similar object.
-  // An object with a `pathname` property is sufficient.
-  // Calls the `getState` and `getLocation` function.
-  // Returns a plain object with no methods.
-  function locationInfo(location) {
-    // Grab props that we will process.
-    const { pathname, search, hash } = location
-    // Grab the properties we pass along from the location object.
-    // Pathname gets deleted if there is a route match.
-    const info = pick(location, 'protocol', 'hostname', 'port', 'pathname', 'query')
-    if (hash) {
-      info.hash = getHash(hash)
-    }
-    // Parse pathname based on routes above.
-    const route = pathInfo(pathname)
-    // Parse query string.
-    // Prevent this process by omit `search` prop and include `query` prop yourself.
-    if (search) {
-      info.query = parse(search)
-    }
-    // Route match.
-    if (route) {
-      // Allow redirect method to trigger reprocessing.
-      if (isFunction(route.redirect)) {
-        const redirectLocation = route.redirect(info, route)
-        if (redirectLocation) return locationInfo(redirectLocation)
-      }
-      info.routeId = route.id
-      info.params = route.params
-      // Allow route getState function to set specific state object.
-      if (isFunction(route.getState)) {
-        info.state = route.getState(info)
-      }
-      // What the url should be.
-      // Opportunity to set a redirect or correct the location of a pushState.
-      info.location = isFunction(route.getLocation) ? route.getLocation(info) : pathname
-    }
-    return info
-  }
   return {
     getRoutes,
     getRoute,
-    locationInfo,
+    locationInfo: partial(locationInfo, pathInfo),
     makeRoute,
+    makeRoutes,
     pathInfo,
   }
 }

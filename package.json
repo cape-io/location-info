@@ -1,6 +1,6 @@
 {
   "name": "location-info",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {
@@ -33,7 +33,6 @@
     "babel-cli": "^6.4.5",
     "babel-core": "^6.3.21",
     "babel-eslint": "^5.0.0-beta6",
-    "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
     "eslint": "^1.10.3",
@@ -41,6 +40,7 @@
     "eslint-config-import": "^0.9.1",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-babel": "^3.0.0",
-    "eslint-plugin-import": "^0.12.1"
+    "eslint-plugin-import": "^0.12.1",
+    "tape": "^4.4.0"
   }
 }
