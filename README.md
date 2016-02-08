@@ -6,6 +6,17 @@ Something like this:
 
 ```javascript
 import createRouter from 'location-info'
+const router = createRouter()
+const routes = {
+  about: '/about',
+  member: '/member(/:id)',
+}
+router.makeRoutes(routes)
+```
+
+or this:
+
+```javascript
 
 const valid = {
   visit: true,
