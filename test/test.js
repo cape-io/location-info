@@ -15,6 +15,7 @@ test('makeRoute should accept id as a single argument', (assert) => {
   const routeId = 'zFa'
   const path = `/${routeId}/`
   const route = makeRoute(routeId)
+  assert.equal(route, getRoute(routeId), 'Return same object that is saved.')
   assert.equal(route.id, routeId, 'Save id to route.')
   assert.deepEqual(route.pattern.match(path), {}, 'Match returns empty object.')
   assert.equal(
