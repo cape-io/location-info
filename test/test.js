@@ -17,7 +17,11 @@ test('makeRoute should accept id as a single argument', (assert) => {
   const route = makeRoute(routeId)
   assert.equal(route.id, routeId, 'Save id to route.')
   assert.deepEqual(route.pattern.match(path), {}, 'Match returns empty object.')
-  assert.equal(route.pattern.match(`/${routeId}`), null, 'No match returns null.')
+  assert.equal(
+    getRoute(routeId).pattern.match(`/${routeId}`),
+    null,
+    'getRoute returns route and no match returns null.'
+  )
   assert.deepEqual(_.keys(route), [ 'id', 'pattern' ], 'Returns id and pattern keys.')
   assert.end()
 })
