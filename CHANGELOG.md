@@ -1,3 +1,8 @@
+## [2.2.0]
+
+* `createRouter({ trailingSlash = true })` now accepts options. `trailingSlash` false will create id only routes like `/foo` instead of the default `/foo/`.
+* `addRoutes` now accepts array in addition to object.
+
 ## [2.1.0]
 > 2016-02-08
 

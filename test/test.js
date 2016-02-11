@@ -16,10 +16,10 @@ test('stripHash should remove front hash', (assert) => {
   assert.end()
 })
 
-test('makeRoute should accept id as a single argument', (assert) => {
+test('addRoute should accept id as a single argument', (assert) => {
   const routeId = 'zFa'
   const path = `/${routeId}/`
-  const route = makeRoute(routeId)
+  const route = addRoute(routeId)
   assert.equal(route.index, 0, 'First route index is 0.')
   assert.equal(route, getRoute(routeId), 'Return same object that is saved.')
   assert.equal(route.id, routeId, 'Save id to route.')
@@ -57,7 +57,7 @@ test('makeRoute spreads third argument object onto route', (assert) => {
   assert.end()
 })
 
-test('makeRoute takes simple object and makes routes.', (assert) => {
+test('addRoutes takes simple object and makes routes.', (assert) => {
   const routes = {
     about: '/about',
     member: '/member(/:id)',
@@ -69,6 +69,24 @@ test('makeRoute takes simple object and makes routes.', (assert) => {
     { id: 'kai' },
     'Member path pattern applied.'
   )
+  assert.end()
+})
+
+test('addRoutes takes an array and makes routes.', assert => {
+  const router = createRouter({ trailingSlash: false })
+  router.addRoutes([ 'about', 'contact', 'foo' ])
+  // console.log(router.getRoutes())
+  assert.equal(router.size(), 3, 'Array of three equals size 3.')
+  const aboutRoute = router.getRoute('about')
+  assert.equal(aboutRoute && aboutRoute.id, 'about')
+  assert.equal(aboutRoute.index, 0)
+  assert.deepEqual(aboutRoute.pattern.match('/about'), {}, 'trailingSlash false')
+  const contactRoute = router.getRoute('contact')
+  assert.equal(contactRoute && contactRoute.id, 'contact')
+  assert.equal(contactRoute.index, 1)
+  const fooRoute = router.getRoute('foo')
+  assert.equal(fooRoute && fooRoute.id, 'foo')
+  assert.equal(fooRoute.index, 2)
   assert.end()
 })
 

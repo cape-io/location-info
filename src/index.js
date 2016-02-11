@@ -1,16 +1,18 @@
 import Pattern from 'url-pattern'
-import each from 'lodash/each'
 import find from 'lodash/find'
+import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
+import isString from 'lodash/isString'
+import map from 'lodash/map'
 import partial from 'lodash/partial'
 
 import locationInfo from './locationInfo'
-
+import { getPath } from './utils'
 export { stripHash } from './utils'
 
 // location-info
 // Get custom information about a location object or path.
-export default function createRouter() {
+export default function createRouter({ trailingSlash = true } = {}) {
   // Route database.
   const routeIndex = {}
   // Array of route ids.
@@ -41,8 +43,6 @@ export default function createRouter() {
     routes.splice(index, 1)
   }
 
-  // @TODO add a way to remove route?
-
   // Helper function to make and set new routes.
   // @id is a machine readable string for the route.
   // @path is a path string. See url-pattern module for possible options.
@@ -52,9 +52,13 @@ export default function createRouter() {
   //   `validate` should return true or false.
   //   `getState` should return an object.
   //   `getLocation` should return an absolute path.
-  function addRoute(id, path, props = {}) {
+  function addRoute(id, _path, props = {}) {
+    if (!isString(id)) {
+      console.error(id)
+      throw new Error(`'id' must be a string. Got ${id} instead.`)
+    }
     // path is not required. Default to use the id.
-    const _path = path || `/${id}/`
+    const path = getPath(trailingSlash, id, _path)
     // Make our object that represents a route.
     const route = {
       // Apply any of the props.
@@ -62,7 +66,7 @@ export default function createRouter() {
       id,
       index: routes.length,
       // Create new UrlPattern object.
-      pattern: new Pattern(_path),
+      pattern: new Pattern(path),
     }
     // Add it to our route database index and id list.
     setRoute(route)
@@ -73,9 +77,10 @@ export default function createRouter() {
   // When you need an event simpler way to create routes.
   // Key of object is the route id. Value is the route path template string.
   function addRoutes(routeObject) {
-    each(routeObject, (path, id) => {
-      addRoute(id, path)
-    })
+    if (isArray(routeObject)) {
+      return map(routeObject, id => addRoute(id))
+    }
+    return map(routeObject, (path, id) => addRoute(id, path))
   }
 
   // Check path against specific route. If it's a match grab all info about the route.
