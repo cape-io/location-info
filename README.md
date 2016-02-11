@@ -11,7 +11,10 @@ const routes = {
   about: '/about',
   member: '/member(/:id)',
 }
-router.makeRoutes(routes)
+router.addRoutes(routes)
+// turns into '/foo/', '/bar/'
+// pass createRouter({ trailingSlash: false }) for '/foo' '/bar'
+router.addRoutes([ 'foo', 'bar' ])
 ```
 Note that it's not possible to enforce match order when routes created via object. Using lodash/each internally.
 
