@@ -1,3 +1,8 @@
+## [3.0.1]
+> 2016-02-16
+
+* Forgot to update `lodash` to 4.4.0. Sorry about that.
+
 ## [3.0.0]
 > 2016-02-16
 
