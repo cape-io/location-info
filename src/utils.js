@@ -1,4 +1,6 @@
+import defaults from 'lodash/defaults'
 import isString from 'lodash/isString'
+import pick from 'lodash/pick'
 
 // We are removing the actual hash.
 export function stripHash(hash) {
@@ -13,4 +15,12 @@ export function getPath(trailingSlash, id, path) {
     return path[0] === '/' ? path : `/${path}`
   }
   return trailingSlash ? `/${id}/` : `/${id}`
+}
+
+// Grab the properties we pass along from a location object.
+export function getLocationObject(_location, defaultLocation = {}) {
+  const loc = pick(_location,
+    'pathname', 'hash', 'search', 'origin', 'protocol', 'port', 'hostname',
+  )
+  return defaults(loc, defaultLocation)
 }

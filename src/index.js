@@ -12,7 +12,8 @@ export { stripHash } from './utils'
 
 // location-info
 // Get custom information about a location object or path.
-export default function createRouter({ trailingSlash = true } = {}) {
+export default function createRouter(options = {}) {
+  const { trailingSlash = true } = options
   // Route database.
   const routeIndex = {}
   // Array of route ids.
@@ -126,7 +127,7 @@ export default function createRouter({ trailingSlash = true } = {}) {
     // The id of the matched route.
     const id = find(routes, isMatch)
     // If we found an id return the route object. Otherwise null.
-    return id ? route : null
+    return id ? route : {}
   }
 
   return {
@@ -136,9 +137,7 @@ export default function createRouter({ trailingSlash = true } = {}) {
     getRoutes,
     getRoute,
     size: () => routes.length,
-    locationInfo: partial(locationInfo, pathInfo),
-    makeRoute: addRoute,
-    makeRoutes: addRoutes,
+    locationInfo: partial(locationInfo, pathInfo, options),
     pathInfo,
   }
 }

@@ -6,7 +6,8 @@ const {
   addRoute, addRoutes,
   deleteRoute,
   size,
-  makeRoute, getRoute, locationInfo,
+  getRoute, locationInfo,
+  pathInfo,
 } = createRouter()
 
 test('stripHash should remove front hash', (assert) => {
@@ -34,7 +35,7 @@ test('addRoute should accept id as a single argument', (assert) => {
 })
 
 const path = '/foo/:bar'
-test('makeRoute accepts id and a second path argument', (assert) => {
+test('addRoute accepts id and a second path argument', (assert) => {
   const routeId = 'ca'
   const pathname = '/foo/cat'
   const route = addRoute(routeId, path)
@@ -49,9 +50,9 @@ test('makeRoute accepts id and a second path argument', (assert) => {
   assert.end()
 })
 
-test('makeRoute spreads third argument object onto route', (assert) => {
+test('addRoute spreads third argument object onto route', (assert) => {
   const routeId = 'sm'
-  const route = makeRoute(routeId, path, { sm: 'ys' })
+  const route = addRoute(routeId, path, { sm: 'ys' })
   assert.equal(route.index, 2, 'Third route index is 2.')
   assert.equal(route.sm, 'ys', 'Prop sm added to route.')
   assert.end()
@@ -102,7 +103,12 @@ test('deleteRoute removes route by id.', assert => {
 test('locationInfo', (assert) => {
   const pathname = '/about'
   const route = locationInfo(pathname)
-  assert.equal(route.routeId, 'about', 'accepts string as location')
-  assert.equal(route.pathname, pathname, 'returns original pathname')
+  assert.equal(route.id, 'about', 'accepts string as location')
+  assert.equal(route.location.pathname, pathname, 'returns original pathname')
+  assert.end()
+})
+
+test('pathInfo() should', assert => {
+  assert.deepEqual(pathInfo('asdbzx1'), {}, 'return empty obj when no match')
   assert.end()
 })

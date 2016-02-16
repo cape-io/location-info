@@ -1,42 +1,40 @@
-import pick from 'lodash/pick'
 import isFunction from 'lodash/isFunction'
 import isString from 'lodash/isString'
-import { parse } from 'query-string'
+
+import { getLocationObject } from './utils'
 
 // Makes a new object based on browser document.location or similar object.
 // An object with a `pathname` property is sufficient.
 // Calls the `getState` and `getLocation` function.
 // Returns a plain object with no methods.
-export default function locationInfo(pathInfo, _location) {
-  const location = isString(_location) ? { pathname: _location } : _location
-  // Grab props that we will process.
-  const { pathname, search } = location
-  // Grab the properties we pass along from the location object.
-  // Pathname gets deleted if there is a route match.
-  const info = pick(location, 'protocol', 'hostname', 'port', 'pathname', 'query', 'hash')
-  // Parse pathname based on routes above.
-  const route = pathInfo(pathname)
+export default function locationInfo(pathInfo, options, _location) {
+  const { defaultLocation, parseSearch } = options
+  const loc = isString(_location) ? { pathname: _location } : _location
+  if (!isString(loc.pathname)) {
+    throw new Error('Must pass pathname property value must be a string.')
+  }
+  // Parse pathname based on routes. Get route info or empty object.
+  const route = pathInfo(loc.pathname)
+  route.location = getLocationObject(loc, defaultLocation)
+
   // Parse query string.
-  // Prevent this process by omit `search` prop and include `query` prop yourself.
-  if (search) {
-    info.query = parse(search)
+  if (route.location.search && isFunction(parseSearch)) {
+    route.query = parseSearch(route.location.search)
   }
-  // Route match.
-  if (route) {
-    // Allow redirect method to trigger reprocessing.
-    if (isFunction(route.redirect)) {
-      const redirectLocation = route.redirect(info, route)
-      if (redirectLocation) return locationInfo(redirectLocation)
-    }
-    info.routeId = route.id
-    info.params = route.params
-    // Allow route getState function to set specific state object.
-    if (isFunction(route.getState)) {
-      info.state = route.getState(info)
-    }
-    // What the url should be.
-    // Opportunity to set a redirect or correct the location of a pushState.
-    info.location = isFunction(route.getLocation) ? route.getLocation(info) : pathname
+  // Allow redirect method to trigger reprocessing with a different location.
+  if (isFunction(route.redirect)) {
+    const redirectLocation = route.redirect(route)
+    if (redirectLocation) return locationInfo(pathInfo, options, redirectLocation)
   }
-  return info
+  // Allow route getState function to set specific state object.
+  if (isFunction(route.getState)) {
+    route.state = route.getState(route)
+  }
+  // What the url should be.
+  // Opportunity to set a redirect or correct the location of a pushState.
+  if (isFunction(route.getLocation)) {
+    const newLocation = route.getLocation(route)
+    if (newLocation) route.location = newLocation
+  }
+  return route
 }

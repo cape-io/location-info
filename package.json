@@ -1,6 +1,6 @@
 {
   "name": "location-info",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {
@@ -25,7 +25,6 @@
   "homepage": "https://github.com/cape-io/location-info#readme",
   "dependencies": {
     "lodash": "^4.2.1",
-    "query-string": "^3.0.0",
     "url-pattern": "^1.0.1"
   },
   "devDependencies": {
@@ -41,6 +40,7 @@
     "eslint-loader": "^1.1.1",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-import": "^0.12.1",
+    "query-string": "^3.0.0",
     "tape": "^4.4.0"
   }
 }
