@@ -53,7 +53,7 @@ export default function createRouter(options = {}) {
   //   `validate` should return true or false.
   //   `getState` should return an object.
   //   `getLocation` should return an absolute path.
-  function addRoute(id, _path, props = {}) {
+  function addRoute(id, _path, props = {}, opts) {
     if (!isString(id)) {
       console.error(id)
       throw new Error(`'id' must be a string. Got ${id} instead.`)
@@ -67,7 +67,7 @@ export default function createRouter(options = {}) {
       id,
       index: routes.length,
       // Create new UrlPattern object.
-      pattern: new Pattern(path),
+      pattern: new Pattern(path, opts),
     }
     // Add it to our route database index and id list.
     setRoute(route)
