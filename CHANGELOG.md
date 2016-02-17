@@ -1,7 +1,7 @@
 ## [3.1.0]
 > 2016-02-17
 
-* Allow sending options as third argument to `addRoute(path, props, options)` that gets sent to `new Pattern(path, options)`.
+* Allow sending options as fourth argument to `addRoute(routeId, path, props, options)` that gets sent to `new Pattern(path, options)`.
 
 ## [3.0.1]
 > 2016-02-16

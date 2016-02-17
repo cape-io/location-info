@@ -113,14 +113,14 @@ export default function createRouter(options = {}) {
   // Check a path against all routes.
   // Use this if you have a simple path string.
   // Note that path should not include the search (?foo=bar) portion of the url.
-  function pathInfo(path) {
+  function pathInfo(pathname) {
     // Default to no route.
     let route = null
     // Run against each id in routes array.
     function isMatch(id) {
       // Run match against the route.
       // If it's valid it returns route information.
-      route = routeInfo(id, path)
+      route = routeInfo(id, pathname)
       // Tell find() if we found a result or not.
       return route ? true : false
     }

@@ -50,11 +50,37 @@ test('addRoute accepts id and a second path argument', (assert) => {
   assert.end()
 })
 
+test('size() returns number of routes', assert => {
+  assert.equal(size(), 2, '2 routes so far')
+  assert.end()
+})
+
+test('deleteRoute removes route by id.', assert => {
+  const routeLength = size()
+  assert.equal(getRoute('ca').id, 'ca', 'ca route is there before delete')
+  assert.equal(size(), routeLength, 'length is correct before delete')
+  deleteRoute('ca')
+  assert.equal(getRoute('ca'), undefined, 'getRoute returns undefined.')
+  assert.equal(size(), routeLength - 1, 'length is correct after delete')
+  assert.end()
+})
+
 test('addRoute spreads third argument object onto route', (assert) => {
   const routeId = 'sm'
   const route = addRoute(routeId, path, { sm: 'ys' })
-  assert.equal(route.index, 2, 'Third route index is 2.')
+  assert.equal(route.index, size() - 1, '2nd route index is 1.')
   assert.equal(route.sm, 'ys', 'Prop sm added to route.')
+  assert.end()
+})
+test('addRoute sends fourth argument to new Pattern()', assert => {
+  const token = 'Fe26.2**a346*QQ*6R_o-L--4U-Hfs*1456*RTR-oxBQX-qff9EQO%Bd6LaM30aVijxkXb7lkOM0q7bw'
+  const pathTemplate = '/login/(:token)'
+  const pathname = `/login/${token}`
+  addRoute('login', pathTemplate, {}, {})
+  assert.deepEqual(pathInfo(pathname), {}, 'without option there is no match.')
+  deleteRoute('login')
+  addRoute('login', pathTemplate, {}, { segmentValueCharset: 'a-zA-Z0-9-_~ %.*' })
+  assert.equal(pathInfo(pathname).id, 'login', 'With segmentValueCharset there is a match.')
   assert.end()
 })
 
@@ -88,15 +114,6 @@ test('addRoutes takes an array and makes routes.', assert => {
   const fooRoute = router.getRoute('foo')
   assert.equal(fooRoute && fooRoute.id, 'foo')
   assert.equal(fooRoute.index, 2)
-  assert.end()
-})
-
-test('deleteRoute removes route by id.', assert => {
-  assert.equal(getRoute('ca').id, 'ca', 'ca route is there before delete')
-  assert.equal(size(), 5, 'length is 5 before delete')
-  deleteRoute('ca')
-  assert.equal(getRoute('ca'), undefined, 'getRoute returns undefined.')
-  assert.equal(size(), 4, 'length is 4 after delete')
   assert.end()
 })
 
