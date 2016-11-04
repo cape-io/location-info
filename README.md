@@ -10,11 +10,11 @@ Something like this:
 import createRouter from 'location-info'
 import { parse } from 'query-string'
 const router = createRouter({ parseSearch: parse })
-const routes = {
+router.addRoutes({
   about: '/about',
   member: '/member(/:id)',
-}
-router.addRoutes(routes)
+})
+router.addRoute('dad', '/feed/me')
 // turns into '/foo/', '/bar/'
 // pass createRouter({ trailingSlash: false }) for '/foo' '/bar'
 router.addRoutes([ 'foo', 'bar' ])

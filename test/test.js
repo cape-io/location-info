@@ -79,8 +79,9 @@ test('addRoute sends fourth argument to new Pattern()', assert => {
   addRoute('login', pathTemplate, {}, {})
   assert.deepEqual(pathInfo(pathname), {}, 'without option there is no match.')
   deleteRoute('login')
-  addRoute('login', pathTemplate, {}, { segmentValueCharset: 'a-zA-Z0-9-_~ %.*' })
+  addRoute('login', pathTemplate, {}, { segmentValueCharset: 'a-zA-Z0-9-_~%.*' })
   assert.equal(pathInfo(pathname).id, 'login', 'With segmentValueCharset there is a match.')
+  assert.equal(pathInfo(pathname).params.token, token, 'token param matches.')
   assert.end()
 })
 
