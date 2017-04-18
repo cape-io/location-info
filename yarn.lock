@@ -812,15 +812,9 @@ callsites@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-0.2.0.tgz#afab96262910a7f33c19a5775825c69f34e350ca"
 
-cape-lodash@^1.12.0:
+cape-lodash@^1.12.0, cape-lodash@^1.7.0, cape-lodash@^1.8.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/cape-lodash/-/cape-lodash-1.12.0.tgz#75da92fd3a3920db8966cff0103e03b65b82821b"
-  dependencies:
-    lodash "^4.17.2"
-
-cape-lodash@^1.8.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/cape-lodash/-/cape-lodash-1.11.0.tgz#ba6d6d20e20bc771dcfcf32775d395fda4fb5007"
   dependencies:
     lodash "^4.17.2"
 
@@ -831,6 +825,13 @@ cape-redux@^3.1.0:
     cape-lodash "^1.8.0"
     lodash "^4.17.2"
     redux "^3.6.0"
+
+cape-select@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/cape-select/-/cape-select-2.4.0.tgz#c4682a65e9b4c3c57bdaa8ad2e8e6012fa963c5f"
+  dependencies:
+    cape-lodash "^1.7.0"
+    lodash "^4.17.2"
 
 caseless@~0.11.0:
   version "0.11.0"

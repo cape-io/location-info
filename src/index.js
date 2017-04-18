@@ -67,7 +67,7 @@ export default function createRouter(options = {}) {
       id,
       index: routes.length,
       // Create new UrlPattern object.
-      pattern: new Pattern(path, opts),
+      pattern: new Pattern(path, options),
     }
     // Add it to our route database index and id list.
     setRoute(route)

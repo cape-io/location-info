@@ -10,13 +10,6 @@ const {
   pathInfo,
 } = createRouter()
 
-test('stripHash should remove front hash', (assert) => {
-  assert.equal(stripHash('#hash'), 'hash', 'Removes hash from start.')
-  assert.equal(stripHash('nohash'), 'nohash', 'Leaves no hash untouched.')
-  assert.equal(stripHash('middle#hash'), 'middle#hash', 'Leaves middle hash there.')
-  assert.end()
-})
-
 test('addRoute should accept id as a single argument', (assert) => {
   const routeId = 'zFa'
   const path = `/${routeId}/`
@@ -30,7 +23,7 @@ test('addRoute should accept id as a single argument', (assert) => {
     null,
     'getRoute returns route and no match returns null.'
   )
-  assert.deepEqual(_.keys(route), [ 'id', 'index', 'pattern' ], 'Returns id and pattern keys.')
+  assert.deepEqual(_.keys(route), ['id', 'index', 'pattern'], 'Returns id and pattern keys.')
   assert.end()
 })
 

@@ -1,5 +1,4 @@
 import { delAt, reduce, setIn } from 'cape-lodash'
-import { get } from 'lodash/fp'
 import { createReducer } from 'cape-redux'
 import { getPath } from './utils'
 import { ADD_ROUTE, ADD_ROUTES, DEL_ROUTE } from './actions'
@@ -7,13 +6,10 @@ import { ADD_ROUTE, ADD_ROUTES, DEL_ROUTE } from './actions'
 export const ROUTE_PREFIX = 'route'
 
 export const defaultState = {
-  config: {
-    trailingSlash: true,
-  },
+  trailingSlash: false,
   [ROUTE_PREFIX]: {
   },
 }
-export const trailingSlash = get('config.trailingSlash')
 
 export function delRoute(state, payload) {
   return delAt([ROUTE_PREFIX, payload], state)
@@ -23,7 +19,7 @@ export function setRoute(state, { id, path, ...rest }) {
     throw new Error(`Already have a route with the id of "${id}".`)
   }
   return setIn([ROUTE_PREFIX, id], {
-    ...rest, id, path: getPath(trailingSlash(state), id, path),
+    ...rest, id, path: getPath(state.trailingSlash, id, path),
   })
 }
 export function setRoutes(state, payload) {
