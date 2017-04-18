@@ -1,4 +1,4 @@
-import { flip, isArray, map, unary } from 'lodash'
+import { ary, flip, isArray, map, unary } from 'lodash'
 import { createAction } from 'cape-redux'
 import { structuredSelector } from 'cape-select'
 import { idString } from './utils'
@@ -10,9 +10,9 @@ import { idString } from './utils'
 //  `options` @see https://github.com/snd/url-pattern#customize-the-pattern-syntax
 //  `path`
 //  `position`.
-function addRoutePayload(id, props = {}) {
+function addRoutePayload(id, path = null, props = {}) {
   idString(id)
-  return { ...props, id }
+  return { ...props, id, path }
 }
 
 export const ADD_ROUTE = 'locInfo/ADD_ROUTE'
@@ -28,7 +28,7 @@ export function addRoutesPayload(routeObject) {
   if (isArray(routeObject)) {
     return map(routeObject, unary(addRoutePayload))
   }
-  return map(routeObject, flip(addRoutePayload))
+  return map(routeObject, ary(flip(addRoutePayload), 2))
 }
 export const ADD_ROUTES = 'locInfo/ADD_ROUTES'
 export const addRoutes = createAction(ADD_ROUTES, addRoutesPayload)
