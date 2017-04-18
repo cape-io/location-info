@@ -2,6 +2,14 @@ import defaults from 'lodash/defaults'
 import isString from 'lodash/isString'
 import pick from 'lodash/pick'
 
+export function idString(id) {
+  if (!isString(id)) {
+    console.error(id)
+    throw new Error(`'id' must be a string. Got ${id} instead.`)
+  }
+  return id
+}
+
 // We are removing the actual hash.
 export function stripHash(hash) {
   if (hash[0] === '#') {
