@@ -115,6 +115,7 @@ test('addRoutes takes an array and makes routes.', assert => {
   const fooRoute = router.getRoute('foo')
   assert.equal(fooRoute && fooRoute.id, 'foo')
   assert.equal(fooRoute.index, 2)
+
   assert.end()
 })
 

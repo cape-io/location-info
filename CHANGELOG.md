@@ -1,3 +1,7 @@
+## [4.0.0]
+
+* Move towards using a Redux style architecture.
+
 ## [3.1.0]
 > 2016-02-17
 
