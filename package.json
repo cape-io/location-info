@@ -28,6 +28,7 @@
     "cape-redux": "^3.1.0",
     "cape-select": "^2.4.0",
     "lodash": "^4.17.4",
+    "reselect": "^3.0.0",
     "url-pattern": "^1.0.2"
   },
   "devDependencies": {
