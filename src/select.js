@@ -42,7 +42,7 @@ export function findRoute(routes, _location) {
     // If it's valid it returns route information.
     routeInfo = checkRoute(route, loc)
     // Tell find() if we found a result or not.
-    return (routeInfo && true) || false
+    return !routeInfo
   }
   // Check a path against all routes.
   forEach(routes, isMatch)
