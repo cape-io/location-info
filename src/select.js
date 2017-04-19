@@ -9,3 +9,5 @@ export const getRoutes = select(getLocInfo, 'route')
 
 export const addPattern = setField('pattern', ({ path, options }) => new Pattern(path, options))
 export const selectRoutes = createSelector(getRoutes, map(addPattern))
+
+// route.pattern.match(path)
