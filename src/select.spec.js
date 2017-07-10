@@ -7,11 +7,17 @@ const routes = {
   home: '/',
   me: '/me',
 }
+const state = {
+  locInfo: reducer(undefined, addRoutes(routes)),
+}
 
+test('selectRoutes', (t) => {
+  const route = selectRoutes(state).details
+  const location = route.pattern.stringify({ extra: 'bits', showId: 20 })
+  t.equal(location, '/details/20')
+  t.end()
+})
 test('findRoute', (t) => {
-  const state = {
-    locInfo: reducer(undefined, addRoutes(routes)),
-  }
   const res = findRoute(selectRoutes(state), '/me')
   t.equal(res.route.id, 'me', 'route id')
   t.deepEqual(res.location, { pathname: '/me' }, 'location')

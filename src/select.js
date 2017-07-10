@@ -1,5 +1,5 @@
 import { forEach, isString } from 'lodash'
-import { get, map } from 'lodash/fp'
+import { get, mapValues } from 'lodash/fp'
 import { setField } from 'cape-lodash'
 import { select } from 'cape-select'
 import { createSelector } from 'reselect'
@@ -10,7 +10,7 @@ export const getLocInfo = get('locInfo')
 export const getRoutes = select(getLocInfo, 'route')
 
 export const addPattern = setField('pattern', ({ path, options }) => new Pattern(path, options))
-export const selectRoutes = createSelector(getRoutes, map(addPattern))
+export const selectRoutes = createSelector(getRoutes, mapValues(addPattern))
 
 // Check path against specific route. If it's a match grab all info about the route.
 // Calls the `validate` and `getParams` methods on the route if it has them.
@@ -27,6 +27,7 @@ function checkRoute(route, loc) {
 }
 
 // Use this if you have a simple path string.
+// @TODO Look into caching?
 export function findRoute(routes, _location) {
   const loc = isString(_location) ? { pathname: _location } : _location
   if (!isString(loc.pathname)) {
