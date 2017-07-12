@@ -1,4 +1,4 @@
-import { reduce } from 'lodash'
+import { get, reduce } from 'lodash'
 import { delAt, setIn } from 'cape-lodash'
 import { createReducer } from 'cape-redux'
 import { getPath } from './utils'
@@ -16,7 +16,7 @@ export function delRoute(state, payload) {
   return delAt([ROUTE_PREFIX, payload], state)
 }
 export function setRoute(state, { id, path, ...rest }) {
-  if (state[ROUTE_PREFIX][id]) {
+  if (get(state, [ROUTE_PREFIX, id])) {
     throw new Error(`Already have a route with the id of "${id}".`)
   }
   return setIn([ROUTE_PREFIX, id], state, {

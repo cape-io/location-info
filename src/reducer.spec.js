@@ -1,5 +1,5 @@
 import test from 'tape'
-import { addRoutes } from './actions'
+import { addRoute, addRoutes } from './actions'
 import reducer, { defaultState } from './reducer'
 
 const routes = {
@@ -29,5 +29,18 @@ test('setRoutes', (t) => {
     },
     trailingSlash: false,
   })
+  t.end()
+})
+
+test('setRoute', (t) => {
+  const res = reducer(undefined, addRoute('dat', 'feed/me'))
+  t.deepEqual(res, {
+    route: {
+      dat: { id: 'dat', path: '/feed/me' },
+    },
+    trailingSlash: false,
+  })
+  const res2 = reducer(res, addRoute('tad', '/me/feed'))
+  t.equal(res2.route.tad.id, 'tad')
   t.end()
 })

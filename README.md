@@ -1,68 +1,29 @@
 # location-info
 
-This is just a wrapper around `url-pattern` to enable some basic route processing.
+This is just a wrapper around `url-pattern` to enable some "route" processing with redux.
 
-Get custom information about a location object or path. The library forces a unique key/id for each route because the author prefers objects over arrays.
+Set and get custom information about a location object or string path. The library forces a unique key/id for each route. Routes are currently flat.
 
-Something like this:
-
-```javascript
-import createRouter from 'location-info'
-import { parse } from 'query-string'
-const router = createRouter({ parseSearch: parse })
-router.addRoutes({
-  about: '/about',
-  member: '/member(/:id)',
-})
-router.addRoute('dad', '/feed/me')
-// turns into '/foo/', '/bar/'
-// pass createRouter({ trailingSlash: false }) for '/foo' '/bar'
-router.addRoutes([ 'foo', 'bar' ])
-```
-Note that it's not possible to enforce match order when routes created via object. Using lodash/each internally.
-
-or this:
+You build up the route location info index with redux actions.
 
 ```javascript
-
-const valid = {
-  visit: true,
-  about: true,
-  programs: {
-    subject: {
-      entityId: true,
-    },
-  },
-}
-
-// Validation for a default route.
-function validate({ primarySubject, subject, entityId }) {
-  const route = valid[primarySubject]
-  if (!route) return false
-  if (subject && !route.subject) return false
-  if (entityId && !route.subject.entityId) return false
-  return true
-}
-
-function isAnonymous() {
-  // ... Do some checking to see if the user is authenticated.
-  return true
-}
-
-function loginOnAnonymous({ location: { search, pathname, ...location } }, route) {
-  if (isAnonymous()) {
-    return {
-      ...location,
-      pathname: '/user/login',
-    }
-  }
-}
-const router = createRouter()
-
-router.addRoute('login', '/user/login', { validate: isAnonymous })
-router.addRoute('profile', '/user/profile', { redirect: loginOnAnonymous })
-router.addRoute('default', '/(:primarySubject/)(:subject/)(:entityId/)', { validate })
-const info = router.locationInfo(window.location)
-console.log(info)
-
+import { reduce } from 'lodash'
+import { combineReducers, createStore } from 'redux'
+import locInfo, { addRoute, addRoutes } from 'location-info'
+// If not saved in a database/persistent store...
+export const routeActions = [
+  addRoutes({
+    home: '/',
+    about: '/about',
+    member: '/home-drawer/:id',
+    image: '/image-upload',
+  }),
+  addRoute('dat', '/feed/me'),
+  addRoutes(['foo', 'bar']),
+]
+export const initState = { locInfo: reduce(routeActions, locInfo) }
+export const reducer = combineReducers({ locInfo })
+export const store = createStore(reducer, initState)
 ```
+
+Note that it's not possible to enforce match order. Post an issue if you need it.

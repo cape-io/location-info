@@ -1,3 +1,7 @@
+## [4.1.0]
+
+* Embrace redux.
+
 ## [4.0.0]
 
 * Move towards using a Redux style architecture.
