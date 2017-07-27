@@ -50,4 +50,13 @@ export function findRoute(routes, _location) {
   // If we found an id return the route object. Otherwise null.
   return routeInfo || {}
 }
+
 // route.pattern.match(path)
+// We are using the redux-history-sync to put location into state.
+export function routeInfoSelector(routes, history) {
+  if (!history) return history
+  return {
+    ...findRoute(routes, history.location), // params
+    history,
+  }
+}
