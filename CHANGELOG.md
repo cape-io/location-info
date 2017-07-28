@@ -1,3 +1,8 @@
+## [4.2.0]
+
+* `getHref()` selector allows sending state and props, returns href string.
+* `routeInfoSelector()` get and combine route info from a history object.
+
 ## [4.1.0]
 
 * Embrace redux.

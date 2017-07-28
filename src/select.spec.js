@@ -1,5 +1,5 @@
 import test from 'tape'
-import reducer, { addRoutes, findRoute, selectRoutes, routeInfoSelector } from './'
+import reducer, { addRoutes, findRoute, getHref, selectRoutes, routeInfoSelector } from './'
 
 const routeVals = {
   colors: '/colors',
@@ -36,5 +36,12 @@ test('routeInfoSelector', (t) => {
   // console.log(res)
   t.equal(res.history.index, 1)
   t.equal(res.route.id, 'me')
+  t.end()
+})
+test('getHref', (t) => {
+  const props = { routeId: 'details', showId: 'foo' }
+  const res = getHref(state, props)
+  t.equal(res, '/details/foo')
+  t.equal(getHref(state, { routeId: 'home' }), '/')
   t.end()
 })

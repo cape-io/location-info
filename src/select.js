@@ -60,3 +60,11 @@ export function routeInfoSelector(routes, history) {
     history,
   }
 }
+export function getHref(state, { routeId, ...props }) {
+  const pattern = get([routeId, 'pattern'], selectRoutes(state))
+  if (!pattern) { // Throw?
+    console.error(routeId, 'route not found')
+    return routeId
+  }
+  return pattern.stringify(props)
+}
