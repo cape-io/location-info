@@ -54,7 +54,7 @@ export function findRoute(routes, _location) {
 // route.pattern.match(path)
 // We are using the redux-history-sync to put location into state.
 export function routeInfoSelector(routes, history) {
-  if (!history) return history
+  if (!history || !history.location) return history
   return {
     ...findRoute(routes, history.location), // params
     history,
