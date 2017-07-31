@@ -38,3 +38,4 @@ Note that it's not possible to enforce match order. Post an issue if you need it
 * addRoute
 * addRoutes
 * delRoute
+* updateRoute
