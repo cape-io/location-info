@@ -10,7 +10,7 @@ The library forces creating a unique key/id for each route. The route info index
 ```javascript
 import { reduce } from 'lodash'
 import { combineReducers, createStore } from 'redux'
-import locInfo, { addRoute, addRoutes } from 'location-info'
+import locInfo, { addRoute, addRoutes, findRoute, select } from 'location-info'
 
 // If not otherwise saved in a database/persistent store...
 export const routeActions = [
@@ -26,6 +26,9 @@ export const routeActions = [
 export const initState = { locInfo: { route: reduce(routeActions, locInfo) } }
 export const reducer = combineReducers({ locInfo })
 export const store = createStore(reducer, initState)
+
+export const locationDetails = findRoute(selectRoutes(state), '/details/vroom')
+
 ```
 
 Note that it's not possible to enforce match order. Post an issue if you need it.
