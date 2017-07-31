@@ -1,3 +1,8 @@
+## [4.3.0]
+
+* `updateRoute()` action.
+* Code cleanup.
+
 ## [4.2.0]
 
 * `getHref()` selector allows sending state and props, returns href string.

@@ -43,5 +43,7 @@ test('getHref', (t) => {
   const res = getHref(state, props)
   t.equal(res, '/details/foo')
   t.equal(getHref(state, { routeId: 'home' }), '/')
+  const href = getHref(state, { routeId: 'colors' })
+  t.equal(href, '/colors')
   t.end()
 })

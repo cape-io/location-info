@@ -16,7 +16,7 @@ test('default', (t) => {
   t.deepEqual(res, defaultState)
   t.end()
 })
-test('setRoutes', (t) => {
+test('addRoutes', (t) => {
   const res = reducer(undefined, addRoutes(routes))
   t.deepEqual(res, {
     route: {
@@ -32,8 +32,8 @@ test('setRoutes', (t) => {
   t.end()
 })
 
-test('setRoute', (t) => {
-  const res = reducer(undefined, addRoute('dat', 'feed/me'))
+test('addRoute', (t) => {
+  const res = reducer(undefined, addRoute('dat', '/feed/me'))
   t.deepEqual(res, {
     route: {
       dat: { id: 'dat', path: '/feed/me' },
