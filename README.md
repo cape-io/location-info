@@ -21,9 +21,17 @@ export const routeActions = [
     image: '/image-upload',
   }),
   addRoute('dat', '/feed/me'),
+  addRoute({
+    id: 'me', // Ignored.
+    routeId: 'user',
+    routePath: '/user/:userId',
+    userId: 1,  // Ignored.
+    name: 'Profile',  // Ignored.
+  })
+  // Alternative to above: addRoute('user', '/user/:userId')
   addRoutes(['foo', 'bar']),
 ]
-export const initState = { locInfo: { route: reduce(routeActions, locInfo) } }
+export const initState = { locInfo: reduce(routeActions, locInfo) }
 export const reducer = combineReducers({ locInfo })
 export const store = createStore(reducer, initState)
 
@@ -31,11 +39,11 @@ export const locationDetails = findRoute(selectRoutes(state), '/details/vroom')
 
 ```
 
-Note that it's not possible to enforce match order. Post an issue if you need it.
+Note that no care is taken to enforce match order. Post an issue if you need it.
 
 ## Actions
 
-* addRoute
-* addRoutes
-* delRoute
-* updateRoute
+* `addRoute(idOrObj, path = null, props = {})`
+* addRoutes()
+* delRoute()
+* updateRoute()
