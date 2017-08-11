@@ -1,6 +1,6 @@
-import defaults from 'lodash/defaults'
-import isString from 'lodash/isString'
-import pick from 'lodash/pick'
+import { defaultTo, eq, flow, getOr, negate } from 'lodash/fp'
+import { defaults, isString, pick } from 'lodash'
+import { getDefault } from 'cape-lodash'
 
 export function idString(id) {
   // Maybe generate an id?
@@ -10,6 +10,9 @@ export function idString(id) {
   }
   return id
 }
+export const getRouteId = getDefault('routeId', 'id')
+export const getRoutePath = flow(getDefault('routePath', 'path'), defaultTo(null))
+export const isValidRouteObj = flow(getOr(true, 'route'), negate(eq(false)))
 
 // We are removing the actual hash.
 export function stripHash(hash) {

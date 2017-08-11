@@ -1,17 +1,20 @@
-import { ary, flip, isArray, map, unary } from 'lodash'
+import { ary, flip, isArray, isPlainObject, map, unary } from 'lodash'
 import { createSimpleAction } from 'cape-redux'
-import { idString } from './utils'
+import { structuredSelector } from 'cape-select'
+import { getRouteId, getRoutePath, idString } from './utils'
 
 // Make and save new routes.
 export const ADD_ROUTE = 'locInfo/ADD_ROUTE'
+const addRouteMenu = structuredSelector({ id: getRouteId, path: getRoutePath })
 // @id is a machine readable string for the route.
 // @path is a path string. See url-pattern module for possible options.
 // @props object
 //  `options` @see https://github.com/snd/url-pattern#customize-the-pattern-syntax
 //  `path`
 //  `position`.
-function addRoutePayload(id, path = null, props = {}) {
-  return { ...props, id: idString(id), path }
+function addRoutePayload(arg1, path = null, props = {}) {
+  if (isPlainObject(arg1)) return addRouteMenu(arg1)
+  return { ...props, id: idString(arg1), path }
 }
 export const addRoute = createSimpleAction(ADD_ROUTE, addRoutePayload)
 

@@ -1,3 +1,7 @@
+## [4.4.0]
+
+* `getInitState()`
+
 ## [4.3.0]
 
 * `updateRoute()` action.

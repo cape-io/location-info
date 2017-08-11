@@ -1,11 +1,17 @@
 import test from 'tape'
+import { setIn } from 'cape-lodash'
 import { addRoute, ADD_ROUTE, addRoutes, ADD_ROUTES, delRoute, DEL_ROUTE } from './actions'
 
 test('addRoute', (t) => {
   const res = addRoute('foo')
-  t.deepEqual(res, { payload: { id: 'foo', path: null }, type: ADD_ROUTE })
+  const action1 = { payload: { id: 'foo', path: null }, type: ADD_ROUTE }
+  t.deepEqual(res, action1)
+  t.deepEqual(addRoute({ id: 'foo', name: 'Foo' }), action1)
   const res2 = addRoute('foo', '/bar')
-  t.deepEqual(res2, { payload: { id: 'foo', path: '/bar' }, type: ADD_ROUTE })
+  const action2 = setIn(['payload', 'path'], action1, '/bar')
+  t.deepEqual(res2, action2)
+  t.deepEqual(addRoute({ id: 'baz', routeId: 'foo', routePath: '/bar' }), action2)
+  t.deepEqual(addRoute({ id: 'foo', path: '/bar' }), action2)
   t.end()
 })
 test('addRoutes', (t) => {
