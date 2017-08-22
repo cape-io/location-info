@@ -30,6 +30,16 @@ test('addRoutes', (t) => {
       { id: 'image', path: '/image-upload' },
     ],
   })
+  const res2 = addRoutes(['about', 'contact', 'favs', 'showroom'])
+  t.deepEqual(res2, {
+    type: ADD_ROUTES,
+    payload: [
+      { id: 'about', path: null },
+      { id: 'contact', path: null },
+      { id: 'favs', path: null },
+      { id: 'showroom', path: null },
+    ],
+  })
   t.end()
 })
 test('delRoute', (t) => {
