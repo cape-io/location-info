@@ -10,7 +10,7 @@ The library forces creating a unique key/id for each route. The route info index
 ```javascript
 import { reduce } from 'lodash'
 import { combineReducers, createStore } from 'redux'
-import locInfo, { addRoute, addRoutes, findRoute, select } from 'location-info'
+import locInfo, { addRoute, addRoutes, findRoute, getInitState, select } from 'location-info'
 
 // If not otherwise saved in a database/persistent store...
 export const routeActions = [
@@ -31,7 +31,7 @@ export const routeActions = [
   // Alternative to above: addRoute('user', '/user/:userId')
   addRoutes(['foo', 'bar']),
 ]
-export const initState = { locInfo: reduce(routeActions, locInfo) }
+export const initState = { locInfo: getInitState(routeActions) }
 export const reducer = combineReducers({ locInfo })
 export const store = createStore(reducer, initState)
 

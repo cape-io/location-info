@@ -1,3 +1,7 @@
+## [4.5.0]
+
+* `getInitState()` can accept an array of actions or an object of route like details. See `initState.spec.js`.
+
 ## [4.4.0]
 
 * `getInitState()`
