@@ -8,7 +8,6 @@ Set and get custom information about a location object or string path.
 The library forces creating a unique key/id for each route. The route info index with redux actions.
 
 ```javascript
-import { reduce } from 'lodash'
 import { combineReducers, createStore } from 'redux'
 import locInfo, { addRoute, addRoutes, findRoute, getInitState, select } from 'location-info'
 
