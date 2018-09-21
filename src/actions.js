@@ -20,7 +20,7 @@ export const addRoute = createSimpleAction(ADD_ROUTE, addRoutePayload)
 
 // addRoutes
 export const ADD_ROUTES = 'locInfo/ADD_ROUTES'
-// When you need an event simpler way to create routes.
+// When you need a simpler way to create routes.
 // Key of object is the route id. Value is the route path template string.
 export function addRoutesPayload(routeObject) {
   if (isArray(routeObject)) {
