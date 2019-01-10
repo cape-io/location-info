@@ -12,7 +12,7 @@ import { combineReducers, createStore } from 'redux'
 import locInfo, { addRoute, addRoutes, findRoute, getInitState, select } from 'location-info'
 
 // If not otherwise saved in a database/persistent store...
-export const routeActions = [
+const routeActions = [
   addRoutes({
     home: '/',
     about: '/about',
@@ -23,18 +23,22 @@ export const routeActions = [
   addRoute({
     id: 'me', // Ignored because `routeId` has priority.
     routeId: 'user',
-    routePath: '/user/:userId',
+    routePattern: '/user/:userId',
     userId: 1,  // Ignored.
     name: 'Profile',  // Ignored.
-  })
+  }),
   // Alternative to above: addRoute('user', '/user/:userId')
   addRoutes(['foo', 'bar']),
+  addRoute({
+    id: 'detail',
+    pattern: '/detail/:id',
+  }),
 ]
 export const reducer = combineReducers({ locInfo })
 export const initState = { locInfo: getInitState(routeActions) }
 export const store = createStore(reducer, initState)
 
-export const locationDetails = findRoute(selectRoutes(state), '/details/vroom')
+export const locationDetails = findRoute(selectRoutes(state), '/detail/vroom')
 
 ```
 
@@ -42,7 +46,7 @@ Note that no care is taken to enforce match order. Post an issue if you need it.
 
 ## Actions
 
-* `addRoute(idOrObj, path = null, props = {})`
+* `addRoute(idOrObj, pattern = null, props = {})`
 * addRoutes()
 * delRoute()
 * updateRoute()

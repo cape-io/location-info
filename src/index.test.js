@@ -20,7 +20,14 @@ const routeActions = [
   }),
   // Alternative to above: addRoute('user', '/user/:userId')
   addRoutes(['foo', 'bar']),
-  addRoute('detail', '/detail/:id'),
+  addRoute({
+    id: 'detail',
+    pattern: '/detail/:id',
+  }),
+  addRoute({
+    id: 'default',
+    pattern: '*',
+  }),
 ]
 
 const state = { locInfo: getInitState(routeActions) }
@@ -40,5 +47,6 @@ describe('without redux', () => {
   test('Return some useful stuff', () => {
     // expect(locationDetails).toEqual(locationRes)
     expect(locationDetails).toMatchObject(locationRes)
+    expect(findRoute(routes, 'foo-bar.com').id).toBe('default')
   })
 })
