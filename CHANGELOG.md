@@ -1,3 +1,7 @@
+## [5.0.0]
+
+* Rewrite tests to use jest. Some code cleanup to make it slightly more useful on a server.
+
 ## [4.5.0]
 
 * `getInitState()` can accept an array of actions or an object of route like details. See `initState.spec.js`.
