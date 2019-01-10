@@ -9,6 +9,7 @@ export const ROUTE_PREFIX = 'route'
 
 export const defaultState = {
   trailingSlash: false,
+  urlPath: 'pathname',
   [ROUTE_PREFIX]: {},
 }
 
