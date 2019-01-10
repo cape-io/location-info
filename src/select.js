@@ -1,10 +1,9 @@
-import { curry, isString, transform, set } from 'lodash'
-import { get, mapValues } from 'lodash/fp'
+import { forEach, get, isString, mapValues, set } from 'lodash/fp'
 import { setField } from 'cape-lodash'
 import { select } from 'cape-select'
 import { createSelector } from 'reselect'
 import Pattern from 'url-pattern'
-import { getLocationObject } from './utils'
+import { getLocation } from './utils'
 
 export const getLocInfo = get('locInfo')
 export const getRoutes = select(getLocInfo, 'route')
@@ -13,27 +12,27 @@ export const addPattern = setField('pattern', ({ path, options }) => new Pattern
 export const selectRoutes = createSelector(getRoutes, mapValues(addPattern))
 
 // Check path against specific route. If it's a match grab all info about the route.
-// Calls the `validate` and `getParams` methods on the route if it has them.
-const checkRoute = curry((loc, res, route) => {
-  set(res, 'params', route.pattern.match(loc.pathname))
-  if (!res.params) return true
-  set(res, 'location', loc)
-  set(res, 'route', route)
-  return false
-})
+const checkRoute = (urlPart, route) => route.pattern.match(urlPart)
 
 export function getLoc(locInfo) {
   const loc = isString(locInfo) ? { pathname: locInfo } : locInfo
   if (!isString(loc.pathname)) {
     throw new Error('Must pass pathname property value must be a string.')
   }
-  return getLocationObject(loc)
+  return getLocation(loc)
 }
 
 // Use this if you have a simple path string.
 // @TODO Look into caching?
-export function findRoute(routes, locInfo) {
-  return transform(routes, checkRoute(getLoc(locInfo)), {})
+export function findRoute(routes, urlPart) {
+  let result = null
+  function iteratee(route) {
+    const params = checkRoute(urlPart, route)
+    if (params) result = set('params', params, set('urlPart', urlPart, route))
+    return !result
+  }
+  forEach(iteratee, routes)
+  return result
 }
 
 // route.pattern.match(path)

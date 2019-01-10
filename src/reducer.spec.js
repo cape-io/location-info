@@ -1,6 +1,8 @@
-import test from 'tape'
+import { get } from 'lodash/fp'
 import { addRoute, addRoutes } from './actions'
 import reducer, { defaultState } from './reducer'
+
+/* globals describe test expect */
 
 const routes = {
   colors: '/colors',
@@ -11,36 +13,39 @@ const routes = {
   studentList: '/students',
 }
 
-test('default', (t) => {
-  const res = reducer(undefined)
-  t.deepEqual(res, defaultState)
-  t.end()
-})
-test('addRoutes', (t) => {
-  const res = reducer(undefined, addRoutes(routes))
-  t.deepEqual(res, {
-    route: {
-      colors: { id: 'colors', path: '/colors' },
-      details: { id: 'details', path: '/details/:showId' },
-      filmfest: { id: 'filmfest', path: '/details/recPkxpU5hm2lfIWC' },
-      home: { id: 'home', path: '/' },
-      me: { id: 'me', path: '/me' },
-      studentList: { id: 'studentList', path: '/students' },
-    },
-    trailingSlash: false,
+describe('reducer', () => {
+  test('undefined default', () => {
+    expect(reducer(undefined)).toBe(defaultState)
   })
-  t.end()
+  test('addRoutes', () => {
+    const res = reducer(undefined, addRoutes(routes))
+    const state1 = {
+      route: {
+        colors: { id: 'colors', path: '/colors' },
+        details: { id: 'details', path: '/details/:showId' },
+        filmfest: { id: 'filmfest', path: '/details/recPkxpU5hm2lfIWC' },
+        home: { id: 'home', path: '/' },
+        me: { id: 'me', path: '/me' },
+        studentList: { id: 'studentList', path: '/students' },
+      },
+      trailingSlash: false,
+    }
+    expect(res).toEqual(state1)
+  })
 })
-
-test('addRoute', (t) => {
+describe('addRoute', () => {
   const res = reducer(undefined, addRoute('dat', '/feed/me'))
-  t.deepEqual(res, {
+  const state1 = {
     route: {
       dat: { id: 'dat', path: '/feed/me' },
     },
     trailingSlash: false,
+  }
+  test('add first route', () => {
+    expect(res).toEqual(state1)
   })
-  const res2 = reducer(res, addRoute('tad', '/me/feed'))
-  t.equal(res2.route.tad.id, 'tad')
-  t.end()
+  test('add another route', () => {
+    const res2 = reducer(res, addRoute('tad', '/me/feed'))
+    expect(get('route.tad.id', res2)).toBe('tad')
+  })
 })

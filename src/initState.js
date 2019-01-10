@@ -1,10 +1,17 @@
-import { cond, flow, isArray, isPlainObject, rearg, reduce, stubTrue } from 'lodash/fp'
-import { condId } from 'cape-lodash'
+import {
+  cond, defaultTo, eq, flow, getOr, isArray, isPlainObject, negate, rearg, reduce, stubTrue,
+} from 'lodash/fp'
+import { condId, getDefault } from 'cape-lodash'
+import { structuredSelector } from 'cape-select'
 import reducer from './reducer'
 import { addRoute } from './actions'
-import { isValidRouteObj } from './utils'
 
-export const addRouteAction = (state = [], item) => state.concat(addRoute(item))
+export const getRouteId = getDefault('id', 'routeId')
+export const getRoutePath = flow(getDefault('path', 'routePath'), defaultTo(null))
+const getMenuRoute = structuredSelector({ id: getRouteId, path: getRoutePath })
+
+export const isValidRouteObj = flow(getOr(true, 'route'), negate(eq(false)))
+export const addRouteAction = (state = [], item) => state.concat(addRoute(getMenuRoute(item)))
 export const buildActions = condId([rearg([1], isValidRouteObj), addRouteAction])
 
 export const actionsFromObj = reduce(buildActions, undefined)

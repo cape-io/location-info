@@ -1,7 +1,6 @@
-import isFunction from 'lodash/isFunction'
-import isString from 'lodash/isString'
+import { defaults, isFunction, isString } from 'lodash/fp'
 
-import { getLocationObject } from './utils'
+import { getLocation } from './utils'
 
 // Makes a new object based on browser document.location or similar object.
 // An object with a `pathname` property is sufficient.
@@ -15,7 +14,7 @@ export default function locationInfo(pathInfo, options, _location) {
   }
   // Parse pathname based on routes. Get route info or empty object.
   const route = pathInfo(loc.pathname)
-  route.location = getLocationObject(loc, defaultLocation)
+  route.location = defaults(defaultLocation, getLocation(loc))
 
   // Parse query string.
   if (route.location.search && isFunction(parseSearch)) {

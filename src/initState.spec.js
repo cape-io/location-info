@@ -1,6 +1,8 @@
-import test from 'tape'
-import { actionsFromObj, getInitState } from './initState'
+import { actionsFromObj, getInitState, getRouteId, isValidRouteObj } from './initState'
 import { addRoute, addRoutes } from './actions'
+
+/* globals describe test expect */
+
 // Create a menu and provide enough details for creating routes at the same time.
 export const menu = {
   foo: {
@@ -20,6 +22,7 @@ export const menu = {
     name: 'Profile',
   },
 }
+
 export const result1 = {
   trailingSlash: false,
   route: {
@@ -36,10 +39,22 @@ export const result2 = {
     showroom: { id: 'showroom', path: '/showroom' },
   },
 }
-// test()
-test('getInitState', (t) => {
+
+describe('getRouteId', () => {
+  const res = getRouteId(menu.me)
+  test('Should return routeId before id', () => {
+    expect(res).toBe('user')
+  })
+})
+
+describe('getInitState', () => {
   const res = getInitState(menu)
-  t.deepEqual(res, result1)
+  test('Should handle menu based object', () => {
+    expect(res).toEqual(result1)
+  })
+  test('Should handle menu based object', () => {
+    expect(res).toEqual(result1)
+  })
   const actions = actionsFromObj(menu).concat([
     addRoutes({
       detail: '/detail/:id',
@@ -47,7 +62,13 @@ test('getInitState', (t) => {
     }),
     addRoute('showroom'),
   ])
-  const res2 = getInitState(actions)
-  t.deepEqual(res2, result2)
-  t.end()
+  test('Handle menu and more', () => {
+    expect(getInitState(actions)).toEqual(result2)
+  })
+})
+
+describe('isValidRouteObj', () => {
+  test('Should reject when prop route is false', () => {
+    expect(isValidRouteObj(menu.far)).toBe(false)
+  })
 })

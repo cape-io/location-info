@@ -1,19 +1,27 @@
-import { ary, flip, isArray, isPlainObject, map, unary } from 'lodash'
+import { defaults, isArray, isPlainObject, map, spread, toPairs } from 'lodash/fp'
 import { createSimpleAction } from 'cape-redux'
-import { structuredSelector } from 'cape-select'
-import { getRouteId, getRoutePath, idString } from './utils'
+import { idString } from './utils'
 
 // Make and save new routes.
 export const ADD_ROUTE = 'locInfo/ADD_ROUTE'
-const addRouteMenu = structuredSelector({ id: getRouteId, path: getRoutePath })
-// @id is a machine readable string for the route.
-// @path is a path string. See url-pattern module for possible options.
+export function requireIdPath(payload) {
+  if (!payload.id) throw new Error('Route object must have an id property.')
+  return true
+}
+
 // @props object
 //  `options` @see https://github.com/snd/url-pattern#customize-the-pattern-syntax
 //  `path`
 //  `position`.
+/**
+ * Action builder for adding a single route object.
+ * @param {Object|String} arg1 Object with `id` and `path` properties.
+ *  String machine readable used as `id` of route.
+ * @param {String} [path=null] Path string. See url-pattern module for possible options.
+ * @param {Object} [props={}]  [description]
+ */
 function addRoutePayload(arg1, path = null, props = {}) {
-  if (isPlainObject(arg1)) return addRouteMenu(arg1)
+  if (isPlainObject(arg1)) return requireIdPath(arg1) && defaults({ path: null }, arg1)
   return { ...props, id: idString(arg1), path }
 }
 export const addRoute = createSimpleAction(ADD_ROUTE, addRoutePayload)
@@ -23,10 +31,8 @@ export const ADD_ROUTES = 'locInfo/ADD_ROUTES'
 // When you need a simpler way to create routes.
 // Key of object is the route id. Value is the route path template string.
 export function addRoutesPayload(routeObject) {
-  if (isArray(routeObject)) {
-    return map(routeObject, unary(addRoutePayload))
-  }
-  return map(routeObject, ary(flip(addRoutePayload), 2))
+  if (isArray(routeObject)) return map(addRoutePayload, routeObject)
+  return map(spread(addRoutePayload), toPairs(routeObject))
 }
 export const addRoutes = createSimpleAction(ADD_ROUTES, addRoutesPayload)
 

@@ -1,6 +1,5 @@
-import { defaultTo, eq, flow, getOr, negate } from 'lodash/fp'
-import { defaults, isString, pick } from 'lodash'
-import { getDefault } from 'cape-lodash'
+import { flow, head, isString, pick, split } from 'lodash/fp'
+import { setWith } from 'cape-lodash'
 
 export function idString(id) {
   // Maybe generate an id?
@@ -10,9 +9,6 @@ export function idString(id) {
   }
   return id
 }
-export const getRouteId = getDefault('routeId', 'id')
-export const getRoutePath = flow(getDefault('routePath', 'path'), defaultTo(null))
-export const isValidRouteObj = flow(getOr(true, 'route'), negate(eq(false)))
 
 // We are removing the actual hash.
 export function stripHash(hash) {
@@ -27,10 +23,17 @@ export function getPath(trailingSlash, id, path) {
 export function getInfo(state, { id, path, ...rest }) {
   return { ...rest, id, path: getPath(state.trailingSlash, id, path) }
 }
-// Grab the properties we pass along from a location object.
-export function getLocationObject(_location, defaultLocation = {}) {
-  const loc = pick(_location,
-    'pathname', 'hash', 'search', 'origin', 'protocol', 'port', 'hostname',
-  )
-  return defaults(loc, defaultLocation)
-}
+
+// Parts of the URL or location object that we want to keep.
+export const urlParts = [
+  'origin', 'protocol', 'username', 'password',
+  'host', 'hostname', 'pathname', 'port', 'search', 'searchParams', 'hash',
+]
+// Use parse-domain package for something more complicated.
+const getSubdomain = flow(split('.'), head)
+
+// Grab the properties we pass along from a location/URL object.
+export const getLocation = flow(
+  pick(urlParts),
+  setWith('subdomain', 'hostname', getSubdomain),
+)
