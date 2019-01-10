@@ -11,25 +11,25 @@ export function requireIdPath(payload) {
 
 // @props object
 //  `options` @see https://github.com/snd/url-pattern#customize-the-pattern-syntax
-//  `path`
+//  `pattern`
 //  `position`.
 /**
  * Action builder for adding a single route object.
- * @param {Object|String} arg1 Object with `id` and `path` properties.
+ * @param {Object|String} arg1 Object with `id` and `pattern` properties.
  *  String machine readable used as `id` of route.
- * @param {String} [path=null] Path string. See url-pattern module for possible options.
+ * @param {String} [pattern=null] pattern string. See url-pattern module for possible options.
  * @param {Object} [props={}]  [description]
  */
-function addRoutePayload(arg1, path = null, props = {}) {
-  if (isPlainObject(arg1)) return requireIdPath(arg1) && defaults({ path: null }, arg1)
-  return { ...props, id: idString(arg1), path }
+function addRoutePayload(arg1, pattern = null, props = {}) {
+  if (isPlainObject(arg1)) return requireIdPath(arg1) && defaults({ pattern: null }, arg1)
+  return { ...props, id: idString(arg1), pattern }
 }
 export const addRoute = createSimpleAction(ADD_ROUTE, addRoutePayload)
 
 // addRoutes
 export const ADD_ROUTES = 'locInfo/ADD_ROUTES'
 // When you need a simpler way to create routes.
-// Key of object is the route id. Value is the route path template string.
+// Key of object is the route id. Value is the route pattern template string.
 export function addRoutesPayload(routeObject) {
   if (isArray(routeObject)) return map(addRoutePayload, routeObject)
   return map(spread(addRoutePayload), toPairs(routeObject))

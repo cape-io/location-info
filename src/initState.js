@@ -7,8 +7,8 @@ import reducer from './reducer'
 import { addRoute } from './actions'
 
 export const getRouteId = getDefault('id', 'routeId')
-export const getRoutePath = flow(getDefault('path', 'routePath'), defaultTo(null))
-const getMenuRoute = structuredSelector({ id: getRouteId, path: getRoutePath })
+export const getRoutePath = flow(getDefault('pattern', 'routePattern'), defaultTo(null))
+const getMenuRoute = structuredSelector({ id: getRouteId, pattern: getRoutePath })
 
 export const isValidRouteObj = flow(getOr(true, 'route'), negate(eq(false)))
 export const addRouteAction = (state = [], item) => state.concat(addRoute(getMenuRoute(item)))

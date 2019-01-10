@@ -8,11 +8,12 @@ import { getLocation } from './utils'
 export const getLocInfo = get('locInfo')
 export const getRoutes = select(getLocInfo, 'route')
 
-export const addPattern = setField('pattern', ({ path, options }) => new Pattern(path, options))
+export const getUrlPattern = ({ pattern, options }) => new Pattern(pattern, options)
+export const addPattern = setField('urlPattern', getUrlPattern)
 export const selectRoutes = createSelector(getRoutes, mapValues(addPattern))
 
 // Check path against specific route. If it's a match grab all info about the route.
-const checkRoute = (urlPart, route) => route.pattern.match(urlPart)
+const checkRoute = (urlPart, route) => route.urlPattern.match(urlPart)
 
 export function getLoc(locInfo) {
   const loc = isString(locInfo) ? { pathname: locInfo } : locInfo
@@ -27,6 +28,7 @@ export function getLoc(locInfo) {
 export function findRoute(routes, urlPart) {
   let result = null
   function iteratee(route) {
+    // console.log(urlPart, route)
     const params = checkRoute(urlPart, route)
     if (params) result = set('params', params, set('urlPart', urlPart, route))
     return !result
@@ -47,10 +49,10 @@ export function routeInfoSelector(routes, history) {
 
 // Take an object and turn it into a string.
 export function getHref(state, { routeId, ...props }) {
-  const pattern = get([routeId, 'pattern'], selectRoutes(state))
-  if (!pattern) { // Throw?
+  const urlPattern = get([routeId, 'urlPattern'], selectRoutes(state))
+  if (!urlPattern) { // Throw?
     console.error(routeId, 'route not found')
     return routeId
   }
-  return pattern.stringify(props)
+  return urlPattern.stringify(props)
 }

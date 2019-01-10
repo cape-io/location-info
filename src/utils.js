@@ -16,12 +16,12 @@ export function stripHash(hash) {
   return hash
 }
 
-export function getPath(trailingSlash, id, path) {
-  if (path && isString(path)) return path
+export function getPath(trailingSlash, id, pattern) {
+  if (pattern && isString(pattern)) return pattern
   return trailingSlash ? `/${id}/` : `/${id}`
 }
-export function getInfo(state, { id, path, ...rest }) {
-  return { ...rest, id, path: getPath(state.trailingSlash, id, path) }
+export function getInfo(state, { id, pattern, ...rest }) {
+  return { ...rest, id, pattern: getPath(state.trailingSlash, id, pattern) }
 }
 
 // Parts of the URL or location object that we want to keep.

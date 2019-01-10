@@ -1,6 +1,7 @@
 ## [5.0.0]
 
 * Rewrite tests to use jest. Some code cleanup to make it slightly more useful on a server.
+* Reducer saves pattern string as `pattern` and selector saves Pattern() at `patternUrl`.
 
 ## [4.5.0]
 

@@ -17,7 +17,7 @@ export const menu = {
   me: {
     id: 'me',
     routeId: 'user',
-    routePath: '/user/:userId',
+    routePattern: '/user/:userId',
     userId: 1,
     name: 'Profile',
   },
@@ -25,18 +25,10 @@ export const menu = {
 
 export const result1 = {
   trailingSlash: false,
+  urlPath: 'pathname',
   route: {
-    foo: { id: 'foo', path: '/foo' },
-    user: { id: 'user', path: '/user/:userId' },
-  },
-}
-export const result2 = {
-  trailingSlash: false,
-  route: {
-    ...result1.route,
-    detail: { id: 'detail', path: '/detail/:id' },
-    itemEdit: { id: 'itemEdit', path: '/edit/*' },
-    showroom: { id: 'showroom', path: '/showroom' },
+    foo: { id: 'foo', pattern: '/foo' },
+    user: { id: 'user', pattern: '/user/:userId' },
   },
 }
 
@@ -62,6 +54,15 @@ describe('getInitState', () => {
     }),
     addRoute('showroom'),
   ])
+  const result2 = {
+    ...result1,
+    route: {
+      ...result1.route,
+      detail: { id: 'detail', pattern: '/detail/:id' },
+      itemEdit: { id: 'itemEdit', pattern: '/edit/*' },
+      showroom: { id: 'showroom', pattern: '/showroom' },
+    },
+  }
   test('Handle menu and more', () => {
     expect(getInitState(actions)).toEqual(result2)
   })

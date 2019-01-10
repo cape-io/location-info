@@ -21,7 +21,7 @@ export const routeActions = [
   }),
   addRoute('dat', '/feed/me'),
   addRoute({
-    id: 'me', // Ignored.
+    id: 'me', // Ignored because `routeId` has priority.
     routeId: 'user',
     routePath: '/user/:userId',
     userId: 1,  // Ignored.
@@ -30,8 +30,8 @@ export const routeActions = [
   // Alternative to above: addRoute('user', '/user/:userId')
   addRoutes(['foo', 'bar']),
 ]
-export const initState = { locInfo: getInitState(routeActions) }
 export const reducer = combineReducers({ locInfo })
+export const initState = { locInfo: getInitState(routeActions) }
 export const store = createStore(reducer, initState)
 
 export const locationDetails = findRoute(selectRoutes(state), '/details/vroom')

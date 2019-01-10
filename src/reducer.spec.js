@@ -21,14 +21,15 @@ describe('reducer', () => {
     const res = reducer(undefined, addRoutes(routes))
     const state1 = {
       route: {
-        colors: { id: 'colors', path: '/colors' },
-        details: { id: 'details', path: '/details/:showId' },
-        filmfest: { id: 'filmfest', path: '/details/recPkxpU5hm2lfIWC' },
-        home: { id: 'home', path: '/' },
-        me: { id: 'me', path: '/me' },
-        studentList: { id: 'studentList', path: '/students' },
+        colors: { id: 'colors', pattern: '/colors' },
+        details: { id: 'details', pattern: '/details/:showId' },
+        filmfest: { id: 'filmfest', pattern: '/details/recPkxpU5hm2lfIWC' },
+        home: { id: 'home', pattern: '/' },
+        me: { id: 'me', pattern: '/me' },
+        studentList: { id: 'studentList', pattern: '/students' },
       },
       trailingSlash: false,
+      urlPath: 'pathname',
     }
     expect(res).toEqual(state1)
   })
@@ -37,9 +38,10 @@ describe('addRoute', () => {
   const res = reducer(undefined, addRoute('dat', '/feed/me'))
   const state1 = {
     route: {
-      dat: { id: 'dat', path: '/feed/me' },
+      dat: { id: 'dat', pattern: '/feed/me' },
     },
     trailingSlash: false,
+    urlPath: 'pathname',
   }
   test('add first route', () => {
     expect(res).toEqual(state1)

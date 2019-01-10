@@ -1,4 +1,4 @@
-import reducer, { addRoutes, findRoute, getHref, selectRoutes, routeInfoSelector } from './'
+import reducer, { addRoutes, findRoute, getHref, getUrlPattern, selectRoutes, routeInfoSelector } from './'
 
 /* globals describe test expect */
 
@@ -11,11 +11,21 @@ const routeVals = {
 const state = {
   locInfo: reducer(undefined, addRoutes(routeVals)),
 }
-
+describe('getUrlPattern', () => {
+  test('makes new pattern from object', () => {
+    const res = getUrlPattern({ pattern: '*', options: {} })
+    expect(res.isRegex).toBe(false)
+    expect(res.ast).toEqual([{ tag: 'wildcard', value: '*' }])
+    expect(res.names).toEqual(['_'])
+    // expect(res).toEqual({})
+  })
+})
 describe('selectRoutes', () => {
-  const route = selectRoutes(state).details
+  const routes = selectRoutes(state)
   test('Access route by ID.', () => {
-    const location = route.pattern.stringify({ extra: 'bits', showId: 20 })
+    expect(typeof routes).toBe('object')
+    expect(typeof routes.details).toBe('object')
+    const location = routes.details.urlPattern.stringify({ extra: 'bits', showId: 20 })
     expect(location).toBe('/details/20')
   })
 })
