@@ -1,4 +1,4 @@
-import { flow, head, isString, pick, split } from 'lodash/fp'
+import { flow, head, isString, pick, set, split } from 'lodash/fp'
 import { setWith } from 'cape-lodash'
 
 export function idString(id) {
@@ -16,12 +16,12 @@ export function stripHash(hash) {
   return hash
 }
 
-export function getPath(trailingSlash, id, pattern) {
-  if (pattern && isString(pattern)) return pattern
-  return trailingSlash ? `/${id}/` : `/${id}`
+export function addSlash({ leadingSlash, trailingSlash }, id) {
+  return `${leadingSlash ? '/' : ''}${id}${trailingSlash ? '/' : ''}`
 }
-export function getInfo(state, { id, pattern, ...rest }) {
-  return { ...rest, id, pattern: getPath(state.trailingSlash, id, pattern) }
+export function getInfo(state, route) {
+  if (route.pattern && isString(route.pattern)) return route
+  return set('pattern', addSlash(state, route.id), route)
 }
 
 // Parts of the URL or location object that we want to keep.

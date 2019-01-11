@@ -4,6 +4,11 @@ import reducer, { defaultState } from './reducer'
 
 /* globals describe test expect */
 
+const initState = {
+  leadingSlash: true,
+  trailingSlash: false,
+  urlPath: 'pathname',
+}
 const routes = {
   colors: '/colors',
   filmfest: '/details/recPkxpU5hm2lfIWC',
@@ -20,6 +25,7 @@ describe('reducer', () => {
   test('addRoutes', () => {
     const res = reducer(undefined, addRoutes(routes))
     const state1 = {
+      ...initState,
       route: {
         colors: { id: 'colors', pattern: '/colors' },
         details: { id: 'details', pattern: '/details/:showId' },
@@ -28,8 +34,6 @@ describe('reducer', () => {
         me: { id: 'me', pattern: '/me' },
         studentList: { id: 'studentList', pattern: '/students' },
       },
-      trailingSlash: false,
-      urlPath: 'pathname',
     }
     expect(res).toEqual(state1)
   })
@@ -37,11 +41,10 @@ describe('reducer', () => {
 describe('addRoute', () => {
   const res = reducer(undefined, addRoute('dat', '/feed/me'))
   const state1 = {
+    ...initState,
     route: {
       dat: { id: 'dat', pattern: '/feed/me' },
     },
-    trailingSlash: false,
-    urlPath: 'pathname',
   }
   test('add first route', () => {
     expect(res).toEqual(state1)

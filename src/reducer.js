@@ -8,6 +8,7 @@ import { ADD_ROUTE, ADD_ROUTES, DEL_ROUTE, UPDATE_ROUTE } from './actions'
 export const ROUTE_PREFIX = 'route'
 
 export const defaultState = {
+  leadingSlash: true,
   trailingSlash: false,
   urlPath: 'pathname',
   [ROUTE_PREFIX]: {},

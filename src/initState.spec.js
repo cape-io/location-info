@@ -24,6 +24,7 @@ export const menu = {
 }
 
 export const result1 = {
+  leadingSlash: true,
   trailingSlash: false,
   urlPath: 'pathname',
   route: {
