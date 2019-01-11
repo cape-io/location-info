@@ -1,3 +1,8 @@
+## [5.1.0]
+
+* Added `leadingslash` option.
+* Export `defaultState` and `reducer` props.
+
 ## [5.0.0]
 
 * Rewrite tests to use jest. Some code cleanup to make it slightly more useful on a server.
