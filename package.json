@@ -1,6 +1,6 @@
 {
   "name": "location-info",
-  "version": "5.1.4",
+  "version": "5.1.5",
   "description": "Get custom information about a location object or path.",
   "main": "lib/index.js",
   "scripts": {
