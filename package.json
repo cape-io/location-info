@@ -24,12 +24,12 @@
   },
   "homepage": "https://github.com/cape-io/location-info#readme",
   "dependencies": {
-    "cape-redux": "^3.3.0",
+    "cape-redux": "^3.3.1",
     "cape-select": "^3.1.1",
     "lodash": "^4.17.14",
     "prairie": "^3.9.1",
     "reselect": "^4.0.0",
-    "understory": "^1.7.0",
+    "understory": "^1.7.1",
     "url-pattern": "^1.0.3"
   },
   "devDependencies": {

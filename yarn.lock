@@ -1290,14 +1290,14 @@ caniuse-lite@^1.0.30000981:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000983.tgz#ab3c70061ca2a3467182a10ac75109b199b647f8"
   integrity sha512-/llD1bZ6qwNkt41AsvjsmwNOoA4ZB+8iqmf5LVyeSXuBODT/hAMFNVOh84NdUzoiYiSKqo5vQ3ZzeYHSi/olDQ==
 
-cape-redux@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/cape-redux/-/cape-redux-3.3.0.tgz#67a75281ab539319f44667120721155d3e01e5e5"
-  integrity sha512-bBbaM5A+Wime6kSX9LsC+FoCZsbfJdtsr/HqKWq58W0n/f1aGRVRiavCmWQlJKAqDnYlTfUq9zMcBeDxu7uAEA==
+cape-redux@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/cape-redux/-/cape-redux-3.3.1.tgz#053733f5ffa54e9b80e163971d103264ca61a2e6"
+  integrity sha512-jvBRRBVrDfGTxHEOM49F8dV6MzXtq6Xg2E5G79oR1FOr5yuJ4JF1Suiu4GDBWeFXy/TGkIRMUFVP0EGfdANgBg==
   dependencies:
     jart "^1.0.0"
-    lodash "^4.17.11"
-    redux "^4.0.1"
+    lodash "^4.17.14"
+    redux "^4.0.4"
 
 cape-select@^3.1.1:
   version "3.1.1"
@@ -4159,7 +4159,7 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
-redux@^4.0.1:
+redux@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
   integrity sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q==
@@ -4921,6 +4921,13 @@ understory@^1.7.0:
   integrity sha512-8StoaiRj8zyc6q59Ja94uaF0TprDUrsMOXwO6701HESPSmPfRJVu0EFb14xkCGwX8qptyCTTXqpBCl53QYT6Xw==
   dependencies:
     lodash "^4.17.11"
+
+understory@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/understory/-/understory-1.7.1.tgz#90ef7779bd165612974bdfde581e38c99872c938"
+  integrity sha512-GWOI3d40Y/7aos+m0JbcSsDdKk5auZX/w5+S/cTxfON9m+rLw+0pjjqlI9y1aUD8Z5OJNxIiEvTB5FbqEMv3cg==
+  dependencies:
+    lodash "^4.17.14"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
