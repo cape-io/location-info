@@ -1,9 +1,11 @@
-import { reduce } from 'lodash'
-import { flow, get } from 'lodash/fp'
-import { delAt, merge, setIn } from 'cape-lodash'
+import {
+  flow, get, merge, reduce, set, unset,
+} from 'lodash/fp'
 import { createReducer } from 'cape-redux'
 import { getInfo } from './utils'
-import { ADD_ROUTE, ADD_ROUTES, DEL_ROUTE, UPDATE_ROUTE } from './actions'
+import {
+  ADD_ROUTE, ADD_ROUTES, DEL_ROUTE, UPDATE_ROUTE,
+} from './actions'
 
 export const ROUTE_PREFIX = 'route'
 
@@ -23,17 +25,17 @@ export function requireNew(state, payload) {
   return true
 }
 
-export const delRoute = (state, payload) => delAt(routeId(payload), state)
+export const delRoute = (state, payload) => unset(routeId(payload), state)
 
-export const setRoute = (state, payload) => setIn(routeId(payload.id), state, payload)
+export const setRoute = (state, payload) => set(routeId(payload.id), payload, state)
 
-export const addRoute = (state, payload) =>
-  requireNew(state, payload) && setRoute(state, getInfo(state, payload))
+export const addRoute = (state, payload) => requireNew(state, payload)
+  && setRoute(state, getInfo(state, payload))
 
-export const addRoutes = (state, payload) => reduce(payload, addRoute, state)
+export const addRoutes = (state, payload) => reduce(addRoute, state, payload)
 
 export const updateRoute = (state, payload) => setRoute(
-  state, merge(getRouteInfo(payload.id)(state), getInfo(state, payload))
+  state, merge(getRouteInfo(payload.id)(state), getInfo(state, payload)),
 )
 
 export const reducers = {

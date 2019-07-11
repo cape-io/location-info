@@ -1,6 +1,8 @@
 import { set } from 'lodash/fp'
-// import { setIn } from 'cape-lodash'
-import { addRoute, ADD_ROUTE, addRoutes, ADD_ROUTES, delRoute, DEL_ROUTE } from './actions'
+
+import {
+  addRoute, ADD_ROUTE, addRoutes, ADD_ROUTES, delRoute, DEL_ROUTE,
+} from './actions'
 
 /* globals describe test expect */
 

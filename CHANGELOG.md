@@ -1,3 +1,7 @@
+## [5.1.1]
+
+* Update packages.
+
 ## [5.1.0]
 
 * Added `leadingslash` option.

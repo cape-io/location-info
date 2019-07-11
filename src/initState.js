@@ -1,14 +1,14 @@
 import {
   cond, defaultTo, eq, flow, getOr, isArray, isPlainObject, negate, rearg, reduce, stubTrue,
 } from 'lodash/fp'
-import { condId, getDefault } from 'cape-lodash'
-import { structuredSelector } from 'cape-select'
+import { condId } from 'understory'
+import { findAt, getFields } from 'prairie'
 import reducer from './reducer'
 import { addRoute } from './actions'
 
-export const getRouteId = getDefault('id', 'routeId')
-export const getRoutePath = flow(getDefault('pattern', 'routePattern'), defaultTo(null))
-const getMenuRoute = structuredSelector({ id: getRouteId, pattern: getRoutePath })
+export const getRouteId = findAt(['routeId', 'id'])
+export const getRoutePath = flow(findAt(['routePattern', 'pattern']), defaultTo(null))
+const getMenuRoute = getFields({ id: getRouteId, pattern: getRoutePath })
 
 export const isValidRouteObj = flow(getOr(true, 'route'), negate(eq(false)))
 export const addRouteAction = (state = [], item) => state.concat(addRoute(getMenuRoute(item)))

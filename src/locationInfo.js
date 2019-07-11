@@ -1,6 +1,6 @@
 import { defaults, isFunction, isString } from 'lodash/fp'
 
-import { getLocation } from './utils'
+import getLocation from './location'
 
 // Makes a new object based on browser document.location or similar object.
 // An object with a `pathname` property is sufficient.

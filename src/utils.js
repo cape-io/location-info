@@ -1,5 +1,4 @@
-import { flow, head, isString, pick, set, split } from 'lodash/fp'
-import { setWith } from 'cape-lodash'
+import { isString, pick, set, split } from 'lodash/fp'
 
 export function idString(id) {
   // Maybe generate an id?
@@ -23,17 +22,3 @@ export function getInfo(state, route) {
   if (route.pattern && isString(route.pattern)) return route
   return set('pattern', addSlash(state, route.id), route)
 }
-
-// Parts of the URL or location object that we want to keep.
-export const urlParts = [
-  'origin', 'protocol', 'username', 'password',
-  'host', 'hostname', 'pathname', 'port', 'search', 'searchParams', 'hash',
-]
-// Use parse-domain package for something more complicated.
-const getSubdomain = flow(split('.'), head)
-
-// Grab the properties we pass along from a location/URL object.
-export const getLocation = flow(
-  pick(urlParts),
-  setWith('subdomain', 'hostname', getSubdomain),
-)

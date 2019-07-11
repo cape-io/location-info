@@ -1,9 +1,11 @@
-import { forEach, get, isString, mapValues, set } from 'lodash/fp'
-import { setField } from 'cape-lodash'
+import {
+  forEach, get, isFunction, isString, mapValues, set,
+} from 'lodash/fp'
+import { setField } from 'prairie'
 import { select } from 'cape-select'
 import { createSelector } from 'reselect'
 import Pattern from 'url-pattern'
-import { getLocation } from './utils'
+import getLocation from './location'
 
 export const getLocInfo = get('locInfo')
 export const getRoutes = select(getLocInfo, 'route')
@@ -13,8 +15,13 @@ export const addPattern = setField('urlPattern', getUrlPattern)
 export const selectRoutes = createSelector(getRoutes, mapValues(addPattern))
 
 // Check path against specific route. If it's a match grab all info about the route.
-const checkRoute = (urlPart, route) => route.urlPattern.match(urlPart)
-
+function checkRoute(urlPart, route) {
+  if (!route.urlPattern || !isFunction(route.urlPattern.match)) {
+    console.error(route)
+    throw new Error('Must pass route with `urlPattern` that has match property.')
+  }
+  return route.urlPattern.match(urlPart)
+}
 export function getLoc(locInfo) {
   const loc = isString(locInfo) ? { pathname: locInfo } : locInfo
   if (!isString(loc.pathname)) {
