@@ -1299,13 +1299,13 @@ cape-redux@^3.3.1:
     lodash "^4.17.14"
     redux "^4.0.4"
 
-cape-select@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/cape-select/-/cape-select-3.1.1.tgz#5108550d0f52b0f4a892432e80aa2bf95af900a8"
-  integrity sha512-0uDRm2ccgEdiyXJv3Na54ndR5SfvuNEgnUhjcCRA7YPftoQbiuVSZwemrjigO+2K++CJeO/9oiyzFpGCJDB2IA==
+cape-select@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/cape-select/-/cape-select-3.1.2.tgz#cf0880dcf04c55290fb7991de07beeda2e94e90a"
+  integrity sha512-e2AysruyZI82W8bU6evUZkxAEKUDszeVUOAI/LOgLclX1ZCaiGeZ2R+je+Brqn/neYH/FZxs60/XvXW8CYvbHw==
   dependencies:
     lodash "^4.17.14"
-    understory "^1.7.0"
+    understory "^1.7.1"
 
 capture-exit@^2.0.0:
   version "2.0.0"

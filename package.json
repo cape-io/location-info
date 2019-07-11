@@ -25,7 +25,7 @@
   "homepage": "https://github.com/cape-io/location-info#readme",
   "dependencies": {
     "cape-redux": "^3.3.1",
-    "cape-select": "^3.1.1",
+    "cape-select": "^3.1.2",
     "lodash": "^4.17.14",
     "prairie": "^3.9.1",
     "reselect": "^4.0.0",
